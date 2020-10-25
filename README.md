@@ -1,4 +1,4 @@
-# lambdaAMIBackups.py
+# lambdaAMIBackups & Cleanup Python 3
 Automated AMI Backups using python 3
 This Repo conatains AMI daily, weekly and monthly backup scripts.
 Why do I need AMI Backups and Cleanups?
