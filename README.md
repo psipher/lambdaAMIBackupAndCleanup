@@ -15,3 +15,4 @@ Let’s now take a closer look at each of them with some demos and screenshots t
 
 An wiki has been created for the instructions.
 
+![Screenshot](amazon1.png)
