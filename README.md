@@ -13,6 +13,4 @@ Let’s now take a closer look at each of them with some demos and screenshots t
 4.	Schedule Functions
 5.	 Tagging EC2 Instance
 
-An wiki has been created for the instructions.
 
-![Screenshot](amazon1.png)
