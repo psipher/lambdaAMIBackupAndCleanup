@@ -14,7 +14,10 @@ Let’s now take a closer look at each of them with some demos and screenshots t
 5.	 Tagging EC2 Instance
 
 ### 1. SETUP IAM PERMISSIONS
-Login to your AWS Management console, Go to Services, and click on **IAM** under Security , Identity & compliance .
-In IAM Dashboard, Go to **Policies** tab, click Create Policy and select JSON to add the policy (you can name the policy as lamda-ec2-ami-policy).
-). 
-Paste the content of the following JSON in Policy Document, and click on Create Policy
+Login to your AWS Management console, Go to Services, and click on **IAM** under Security , Identity & compliance . <br/>
+In IAM Dashboard, Go to **Policies** tab, click Create Policy and paste the content of the following JSON in Policy Document, and click on Create Policy
+
+    { "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": [ "logs:*" ], "Resource": "arn:aws:logs:*:*:*" }, { "Effect": "Allow", "Action": "ec2:*", "Resource": "*" } ] }
+
+image 1
+
