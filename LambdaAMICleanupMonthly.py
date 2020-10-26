@@ -1,6 +1,7 @@
 # LambdaAMICleanupMonthly
 # Automated AMI and Snapshot Deletion
 # This code has been updated from python 2 to python 3.8 by Raghav Bhandari
+# https://github.com/psipher/lambdaAMIBackupAndCleanup/blob/master/LambdaAMICleanupMonthly.py
 # This code has been refered from : https://gist.github.com/bkozora/724e01903a9ad481d21e
 
 
