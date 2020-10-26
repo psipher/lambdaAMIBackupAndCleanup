@@ -1,6 +1,7 @@
 #LambdaAMICleanupDaily
 # Automated AMI and Snapshot Deletion
 #Created by Raghav Bhandari
+#https://github.com/psipher/lambdaAMIBackupAndCleanup/blob/master/LambdaAMICleanupDaily.py
 # This code has been refered from : https://gist.github.com/bkozora/d4f1cf0e5cf26acdd377
 # 
 # This script will search for all instances having a tag with "BackupDaily"
