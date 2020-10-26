@@ -17,7 +17,8 @@ In IAM Dashboard, Go to **Policies** tab, click Create Policy and paste the cont
 
     { "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": [ "logs:*" ], "Resource": "arn:aws:logs:*:*:*" }, { "Effect": "Allow", "Action": "ec2:*", "Resource": "*" } ] }
 
-image 1
+![1  iampolicy](https://user-images.githubusercontent.com/18212742/97198083-6df1c980-17d4-11eb-842d-8501fedfca6d.PNG)
+
 You can name the policy as **lamda-ec2-ami-policy**
 Now Click on **Roles**, and **Create New Role**. Under _AWS Service Roles_, select _AWS Lambda_ as the _Role Type_ and then proceed to click **Next:Permissions**
 Now click on **filter polices** and select **customer managed**
@@ -26,6 +27,7 @@ Select the policy you created and click **next :tags** . Tags can be left emptie
  Here’s the IAM Role (**lamda-ec2-ami-role**) with the attached policy (**lamda-ec2-ami-policy**)
 Image
 We have just created a role for which we have allowed permissions to EC2 instances and view logs in Cloudwatch.
+![2](https://user-images.githubusercontent.com/18212742/97198298-a396b280-17d4-11eb-8528-61b79904f6e7.PNG)
 
 #### 2. CREATE LAMBDA BACKUP FUNCTION
 Now that we have created a role and a policy, we’ll have to create the first function that allows us to backup every instance in our account, which has a **"Backup"** key tag. We don’t have to indicate a value here. <br/>
@@ -46,6 +48,7 @@ Also, it will look for a **"RetentionDaily"** , **RetentionWeekly** and **Retent
 7. **Now paste the lambdaAMIBackupsDaily code from the repo** under function code.
 8. Under the **basic settings** select **timeout** as 1 minute and **Memory** as 256mb in order to avoid memory issues . You can change these according to your requirements.
 9. Now create the **lambdaAMIBackupsWeekly** and **lambdaAMIBackupsMonthly** if weekly and monthly ami backups are required using the code in the repo.
+![5lambda](https://user-images.githubusercontent.com/18212742/97198504-e0fb4000-17d4-11eb-8e60-e56aa110807d.PNG) 
 
 #### 3. **CREATE LAMBDA CLEANUP FUNCTION** 
 Having successfully created the AMI using the previous function, we need to now remove them when not needed anymore. <br/>
@@ -65,11 +68,19 @@ To Schedule functions , go to aws cloudwatch, select **Rules** and **create Rule
  Now go to Targets, select lambda function as a target and select the function you created.  You can name your rules as
  **create-ami-daily,  create-ami-weekly,  create-ami-monthly**
  For delete ami you can create a new rule name it as **delete-ami** and add athe multiple delete lambda functions you created. And rather than using cron schedule you can use **fixed rate** and run it every day.
+ ![5 cloudwatch](https://user-images.githubusercontent.com/18212742/97198575-f96b5a80-17d4-11eb-85f2-e610d97fbaa3.PNG)
 #### 4. **TAGGING EC2 INSTANCE**
-Having created AMI backup and clean-up functions and scheduling them, now it’s time to create a tag for the EC2 instance with a tag-key Backup with no value and Retention with retention days. Login to your [AWS Management console](https://console.aws.amazon.com/ec2/), Go to Services, and click on EC2 under Compute.
-Click on **Instances** menu
+Having created AMI backup and clean-up functions and scheduling them, now it’s time to create a tag for the EC2 instance with a tag-key Backup with no value and Retention with retention days.</br>
+ Login to your [AWS Management console](https://console.aws.amazon.com/ec2/), Go to Services, and click on EC2 under Compute. </br>
+Click on **Instances** menu. <br>
 Select the Instance you want to tag (**Linux-test**, for example).
 Go to **Tags** >> **Add Tags** and add the following tags ( **BackupDaily** , **BackupMonthly**, **BackupWeekly**) with no value and with **RetentionDaily** value 7, for example.  RetentionWeekly with value 30 and 
-RetentionMonthly    with 180
-With this daily backup will be stored for7 days, weekly fir 30 days and monthly for 180 days . In order to check the logs , you can go to cloudwatch log group and check incase the backup script ran or the errors.
-Image
+RetentionMonthly    with 180 </br>
+With this daily backup will be stored for7 days, weekly for 30 days and monthly for 180 days . 
+![sss](https://user-images.githubusercontent.com/18212742/97199689-4a2f8300-17d6-11eb-901e-08e3b7ec693d.PNG)
+
+
+![aaa](https://user-images.githubusercontent.com/18212742/97199846-7ea33f00-17d6-11eb-9fb7-f89d9b0e29ac.PNG)
+
+In order to check the logs , you can go to cloudwatch log group and check incase the backup script ran or the errors.
+![cloud](https://user-images.githubusercontent.com/18212742/97200022-b4482800-17d6-11eb-865f-4e45cb31a87f.PNG)
