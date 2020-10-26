@@ -17,7 +17,6 @@ import boto3
 import collections
 import datetime 
 
-#By the time I used this script, the Lamda is not available in Mumbai region. So, I chosen Singapore region.
 #Specify the region in which EC2 Instances located and to create AMI's. Ex: Mumbai region (us-east-2)
 ec = boto3.client('ec2', 'us-east-2')
 #ec = boto3.client('ec2')
