@@ -1,7 +1,7 @@
 # Automated AMI BackupWeekly
 # This code has been updated from python 2 to python 3.8 by Raghav Bhandari
 # This code has been refered from : https://gist.github.com/bkozora/724e01903a9ad481d21e
-#
+#https://github.com/psipher/lambdaAMIBackupAndCleanup/blob/master/LambdaAMIBackupsWeekly.py
 # This script will search for all instances having a tag with "BackupWeekly" 
 # on it and are in 'running' state. As soon as it has the instances list, it loop through each instance
 # and create an AMI of it. Also, it will look for a "RetentionWeekly" tag key which
