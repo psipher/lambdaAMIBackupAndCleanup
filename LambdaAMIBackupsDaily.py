@@ -1,6 +1,6 @@
 # Automated AMI BackupDailys
 # This code has been updated from python 2 to python 3.8 by Raghav Bhandari
-#https://github.com/psipher/lambdaAMIBackupAndCleanup/edit/master/LambdaAMIBackupsDaily.py
+#https://github.com/psipher/lambdaAMIBackupAndCleanup/blob/master/LambdaAMIBackupsDaily.py
 # This code has been refered from : https://gist.github.com/bkozora/724e01903a9ad481d21e
 #
 # This script will search for all instances having a tag with "BackupDaily" 
