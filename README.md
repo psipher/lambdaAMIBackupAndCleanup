@@ -1,8 +1,6 @@
 # lambdaAMIBackups & Cleanup Python 3
 Automated AMI Backups using python 3
-This Repo conatains AMI daily, weekly and monthly backup scripts.
-Why do I need AMI Backups and Cleanups?
-AMI makes it easier and faster to recover an instance in case of a disaster or failure of the instance, and therefore, automating this process is the way to go.
+This Repo conatains AMI daily, weekly and monthly backup scripts. </br>
 
 The process, generally comprises of the following steps:
 
@@ -60,8 +58,18 @@ The function:<br/>
  **lambdaAMIBackupsDaily** : Needs to run atleast once a day from monday to saturday.<br/>
  **lambdaAMIBackupsWeekly** : Needs to be run every Sunday .<br/>
  **lambdaAMICleanupMonthly** : Needs to run first of every month.<br/>
-To Schedule functions , go to aws cloudwatch, select **Rules** and **create Rule**
- 
- 
-
-
+To Schedule functions , go to aws cloudwatch, select **Rules** and **create Rule** </br>
+ Image
+ Select Schedule and add the cron expression in order to set when to execute the function
+ To setup a cron you can visit the [Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html)
+ Now go to Targets, select lambda function as a target and select the function you created.  You can name your rules as
+ **create-ami-daily,  create-ami-weekly,  create-ami-monthly**
+ For delete ami you can create a new rule name it as **delete-ami** and add athe multiple delete lambda functions you created. And rather than using cron schedule you can use **fixed rate** and run it every day.
+#### 4. **TAGGING EC2 INSTANCE**
+Having created AMI backup and clean-up functions and scheduling them, now it’s time to create a tag for the EC2 instance with a tag-key Backup with no value and Retention with retention days. Login to your [AWS Management console](https://console.aws.amazon.com/ec2/), Go to Services, and click on EC2 under Compute.
+Click on **Instances** menu
+Select the Instance you want to tag (**Linux-test**, for example).
+Go to **Tags** >> **Add Tags** and add the following tags ( **BackupDaily** , **BackupMonthly**, **BackupWeekly**) with no value and with **RetentionDaily** value 7, for example.  RetentionWeekly with value 30 and 
+RetentionMonthly    with 180
+With this daily backup will be stored for7 days, weekly fir 30 days and monthly for 180 days . In order to check the logs , you can go to cloudwatch log group and check incase the backup script ran or the errors.
+Image
