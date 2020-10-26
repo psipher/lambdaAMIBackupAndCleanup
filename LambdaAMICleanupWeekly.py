@@ -1,5 +1,6 @@
 #LambdaAMICleanupWeekly
 # Automated AMI and Snapshot Deletion
+# https://github.com/psipher/lambdaAMIBackupAndCleanup/blob/master/LambdaAMICleanupWeekly.py
 # This code has been refered from: https://gist.github.com/bkozora/d4f1cf0e5cf26acdd377
 #Created by Raghav Bhandari
 
