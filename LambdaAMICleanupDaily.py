@@ -54,20 +54,22 @@ def lambda_handler(event, context):
 
     # Loop through all of our instances with a tag named "BackupDaily"
     for instance in instances:
-	imagecount = 0
+        imagecount = 0
 
-        # Loop through each image of our current instance
+         # Loop through each image of our current instance
         for image in images:
 
             # Our other Lambda Function names its AMIs Lambda - Instance Name.
             # We now know these images are auto created
-            if image.name.startswith('Lambda -Daily ' + [result['Value'] for result in instance['Tags'] if result['Key'] == 'Name'][0]):
-            #if image.name.startswith('Lambda ec2 tag - ' + [result['Value'] for result in instance['Tags'] if result['Key'] == 'Name'][0]):
 
+            if image.name.startswith('Lambda -Daily ' + [result['Value'] for result in instance['Tags'] if result['Key'] == 'Name'][0]):
+
+            #if image.name.startswith('Lambda ec2 tag - ' + [result['Value'] for result in instance['Tags'] if result['Key'] == 'Name'][0]):
+                
                 #print "FOUND IMAGE " + image.id + " FOR INSTANCE " + instance['InstanceId']
 
                 # Count this image's occcurance
-	        imagecount = imagecount + 1
+                imagecount = imagecount + 1
 
                 try:
                     if image.tags is not None:
@@ -79,22 +81,20 @@ def lambda_handler(event, context):
                 except IndexError:
                     deletion_date = False
                     delete_date = False
-                
-        
-                
+
+
                 today_time = datetime.datetime.now().strftime('%d-%m-%Y')
                 # today_fmt = today_time.strftime('%m-%d-%Y')
                 today_date = time.strptime(today_time, '%d-%m-%Y')
 
                 
-                # If image's DeleteOn date is less than or equal to today,
-                # add this image to our list of images to process later
-                if delete_date <= today_date:
-                    imagesList.append(image.id)
-                
+
+
+
+
                 # Make sure we have an AMI from today and mark backupSuccess as true
                 if image.name.endswith(date_fmt):
-                    
+
                     # Our latest backup from our other Lambda Function succeeded
                     backupSuccess = True
                     print("Latest backup from " + date_fmt + " was a success")
@@ -107,13 +107,13 @@ def lambda_handler(event, context):
     print(imagesList)
 
     if backupSuccess == True:
-        
+
         snapshotList = []
-        
+
         for image in imagesList:
             #print image
             desc_image_snapshots = ec.describe_images(ImageIds=[image],Owners=['XXXXX',])['Images'][0]['BlockDeviceMappings']
-           # print (desc_image_snapshots)
+            # print (desc_image_snapshots)
             try:
                 for desc_image_snapshot in desc_image_snapshots:
                     snapshot = ec.describe_snapshots(SnapshotIds=[desc_image_snapshot['Ebs']['SnapshotId'],], OwnerIds=['XXXXX'])['Snapshots'][0]
@@ -133,13 +133,13 @@ def lambda_handler(event, context):
                  )
 
         print("=============")
-        
+
         print("About to process the following Snapshots associated with above Images:")
         print (snapshotList)
-        
+
         print("The timer is started for 5 seconds to wait for images to deregister before deleting the snapshots associated to it")    
         time.sleep(10)# This should be set to higher value if the image in the imagesList takes more time to deregister
-        
+
         for snapshot in snapshotList:
             try:
                 snap = ec.delete_snapshot(SnapshotId=snapshot)
@@ -148,7 +148,10 @@ def lambda_handler(event, context):
             except Exception as e:
                 print("%s" % e.message)
         print("Snapshot deleted successfully")
-
+    
 
     else:
         print("No current backup found. Termination suspended.")
+
+        
+
